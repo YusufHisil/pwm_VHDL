@@ -1,0 +1,62 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+use ieee.std_logic_unsigned.all;
+
+ENTITY clk_256_pe_per_hz IS
+  
+  PORT (n: in std_logic_vector(3 downto 0);
+  		rst: in std_logic;
+  		clk_100mhz: in std_logic;
+  		clk_gen: out std_logic
+  );
+END clk_256_pe_per_hz;
+
+--------------------------------------------------------------------------------
+--Complete your VHDL description below
+--------------------------------------------------------------------------------
+
+ARCHITECTURE TypeArchitecture OF clk_256_pe_per_hz IS
+
+signal t: std_logic := '0';
+signal a: integer ;--:= conv_integer(n)*781250;
+signal cnt: integer :=0;
+BEGIN
+--process(n, clk_100mhz)
+--begin
+with n select a <=  195312 when x"2",
+				292968 when x"3",
+				390624 when x"4",
+				488280 when x"5",
+				585936 when x"6",
+				683592 when x"7",
+				781248 when x"8",
+				878904 when x"9",
+				976560 when x"a",
+				1074216 when x"b",
+				1171872 when x"c",
+				1269528 when x"d",
+				1367184 when x"e",
+				1464840 when x"f",
+				97656 when others;
+				
+
+
+process(clk_100mhz, rst)
+    begin
+    if(rst = '1') then
+    	cnt <= 0;
+    	
+        elsif rising_edge(clk_100mhz) then
+            if(cnt = a) then
+            t <= not(t);
+            cnt <= 0;
+            else 
+            cnt <= cnt + 1;
+            end if;
+        end if;
+    end process;
+    clk_gen <= t;
+
+
+END TypeArchitecture;

@@ -1,0 +1,41 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY ssddecoder IS
+  PORT (
+  enable: in std_logic;
+  code: in std_logic_vector(3 downto 0);
+  decode_ssd: out std_logic_vector(6 downto 0) --abcdefg
+    );
+END ssddecoder;
+
+--------------------------------------------------------------------------------
+--Complete your VHDL description below
+--------------------------------------------------------------------------------
+
+ARCHITECTURE behavioral OF ssddecoder IS
+
+BEGIN
+
+process(enable, code)
+begin
+	if enable = '1' then
+		case code is
+			when "0000" => decode_ssd<="0000001";
+			when "0001" => decode_ssd<="1001111";
+			when "0010" => decode_ssd<="0101101";
+			when "0011" => decode_ssd<="0000110";
+			when "0100" => decode_ssd<="1101100";
+			when "0101" => decode_ssd<="0100100";
+			when "0110" => decode_ssd<="0100000";
+			when "0111" => decode_ssd<="0001111";
+			when "1000" => decode_ssd<="0000000";
+			when "1001" => decode_ssd<="0000100";
+			when "1111" => decode_ssd<="1111110";
+			when others => decode_ssd<="1111111";
+		end case;
+	else decode_ssd<="0000001";
+	end if;		
+end process;
+
+END behavioral;

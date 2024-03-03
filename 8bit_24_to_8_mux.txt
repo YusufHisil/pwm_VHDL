@@ -1,0 +1,67 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY mux_24_la_8_8bit IS
+  PORT (
+din_0,din_1,din_2,din_3,din_4,din_5,din_6,din_7: in std_logic_vector(7 downto 0);
+din_8,din_9,din_10,din_11,din_12,din_13,din_14,din_15: in std_logic_vector(7 downto 0);
+din_16,din_17,din_18,din_19,din_20,din_21,din_22,din_23: in std_logic_vector(7 downto 0);
+  		sel: in std_logic_vector(1 downto 0);
+  		d_out0: out std_logic_vector(7 downto 0);
+  		d_out1: out std_logic_vector(7 downto 0);
+  		d_out2: out std_logic_vector(7 downto 0);
+  		d_out3: out std_logic_vector(7 downto 0);
+  		d_out4: out std_logic_vector(7 downto 0);
+  		d_out5: out std_logic_vector(7 downto 0);
+  		d_out6: out std_logic_vector(7 downto 0);
+  		d_out7: out std_logic_vector(7 downto 0));
+END  mux_24_la_8_8bit;
+
+--------------------------------------------------------------------------------
+--Complete your VHDL description below
+--------------------------------------------------------------------------------
+
+ARCHITECTURE TypeArchitecture OF  mux_24_la_8_8bit IS
+
+BEGIN
+	with sel select d_out0 <= din_0 when "00",
+						din_8 when "01",
+						din_16 when "10",	
+						"0000000" when others;
+
+	with sel select d_out1 <= din_1 when "00",
+						din_9 when "01",
+						din_17 when "10",	
+						"0000000" when others;
+
+	with sel select d_out2 <= din_2 when "00",
+						din_10 when "01",
+						din_18 when "10",	
+						"0000000" when others;
+
+	with sel select d_out3 <= din_3 when "00",
+						din_11 when "01",
+						din_19 when "10",	
+						"0000000" when others;
+
+	with sel select d_out4 <= din_4 when "00",
+						din_12 when "01",
+						din_20 when "10",	
+						"0000000" when others;
+
+	with sel select d_out5 <= din_5 when "00",
+						din_13 when "01",
+						din_21 when "10",	
+						"0000000" when others;
+
+	with sel select d_out6 <= din_6 when "00",
+						din_14 when "01",
+						din_22 when "10",	
+						"0000000" when others;
+
+	with sel select d_out7 <= din_7 when "00",
+						din_15 when "01",
+						din_23 when "10",	
+						"0000000" when others;
+
+END TypeArchitecture;

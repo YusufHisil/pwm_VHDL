@@ -1,0 +1,91 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
+
+entity pwm is
+  port (
+    clk : in std_logic;
+    rst : in std_logic;
+    duty_cycle0: in std_logic_vector(7 downto 0);
+    duty_cycle1: in std_logic_vector(7 downto 0);
+    duty_cycle2: in std_logic_vector(7 downto 0);
+    duty_cycle3: in std_logic_vector(7 downto 0);
+    duty_cycle4: in std_logic_vector(7 downto 0);
+    duty_cycle5: in std_logic_vector(7 downto 0);
+    duty_cycle6: in std_logic_vector(7 downto 0);
+    duty_cycle7: in std_logic_vector(7 downto 0);
+    led_out : out std_logic_vector(7 downto 0)
+  );
+end pwm;
+
+architecture rtl of pwm is
+
+  signal pwm_cnt : std_logic_vector(7 downto 0) := (others => '0');
+  signal pwm_out : std_logic_vector(7 downto 0) := (others => '0');
+
+begin
+
+  PWM_PROC : process(clk)
+  begin
+    if rising_edge(clk) then
+      if rst = '1' then
+        pwm_cnt <= (others => '0');
+        pwm_out <= (others=>'0');
+
+      else
+          pwm_cnt <= pwm_cnt + 1;
+          
+
+          -- Wrap pwm_cnt after 2**pwm_bits - 2
+          if pwm_cnt = "11111110" then
+            pwm_cnt <= (others => '0');
+          end if;
+
+          if pwm_cnt < duty_cycle0 then
+            pwm_out(0) <= '1';
+           else
+           	pwm_out(0) <= '0';
+          end if;
+
+          if pwm_cnt < duty_cycle1 then
+            pwm_out(1) <= '1';
+           else
+           	pwm_out(1) <= '0';
+          end if;
+
+		if pwm_cnt < duty_cycle2 then
+            pwm_out(2) <= '1';
+           else
+           	pwm_out(2) <= '0';
+          end if;
+          if pwm_cnt < duty_cycle3 then
+            pwm_out(3) <= '1';
+           else
+           	pwm_out(3) <= '0';
+          end if;
+          if pwm_cnt < duty_cycle4 then
+            pwm_out(4) <= '1';
+           else
+           	pwm_out(4) <= '0';
+          end if;
+          if pwm_cnt < duty_cycle5 then
+            pwm_out(5) <= '1';
+           else
+           	pwm_out(5) <= '0';
+          end if;
+          if pwm_cnt < duty_cycle6 then
+            pwm_out(6) <= '1';
+           else
+           	pwm_out(6) <= '0';
+          end if;
+          if pwm_cnt < duty_cycle7 then
+            pwm_out(7) <= '1';
+           else
+           	pwm_out(7) <= '0';
+          end if;
+        end if;
+      end if;
+  end process;
+led_out <= pwm_out;
+end architecture;
